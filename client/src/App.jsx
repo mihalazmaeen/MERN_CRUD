@@ -12,11 +12,11 @@ function App() {
   return (
  <div>
     <BrowserRouter>
-      <routes>
+      <Routes>
           <Route path="/" element={<Users />}></Route>
           <Route path="/create" element={<CreateUser />}></Route>
           <Route path="/update" element={<UpdateUser />}></Route>
-      </routes>
+      </Routes>
     </BrowserRouter>
  </div>
   )
