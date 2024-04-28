@@ -1,6 +1,21 @@
-import React from "react";
-
+import React, { useState } from "react";
+import axios from "axios";
+import {useNavigate} from 'react-router-dom'
 function CreateUser() {
+  const [name,setName]=useState()
+  const [email,setEmail]=useState()
+  const [age,setAge]=useState()
+  const navigate = useNavigate();
+  const Submit=(e)=>{
+    e.preventDefault();
+    axios.post("http://localhost:3001/createUser",{name,email,age})
+    .then(result=>{
+      console.log(result)
+      navigate('/')
+    })
+    .catch(err=>console.log(err))
+  }
+
   return (
     <div className="container">
       <div className="row justify-content-center mt-5">
@@ -8,7 +23,7 @@ function CreateUser() {
           <div className="card">
             <div className="card-header bg-primary text-white">Add User</div>
             <div className="card-body">
-              <form >
+              <form onSubmit={Submit}>
                 <div className="mb-3">
                   <label htmlFor="name" className="form-label">
                     Name:
@@ -17,7 +32,8 @@ function CreateUser() {
                     type="text"
                     className="form-control"
                     id="name"
-              
+                    placeholder="Enter name"
+                    onChange={(e) => setName(e.target.value)}
                     required
                   />
                 </div>
@@ -29,7 +45,7 @@ function CreateUser() {
                     type="email"
                     className="form-control"
                     id="email"
-                   
+                    onChange={(e) => setEmail(e.target.value)}
                     required
                   />
                 </div>
@@ -41,7 +57,7 @@ function CreateUser() {
                     type="number"
                     className="form-control"
                     id="age"
-                  
+                    onChange={(e) => setAge(e.target.value)}
                     required
                   />
                 </div>
