@@ -11,6 +11,16 @@ function Users() {
       .catch((err) => console.log(err));
   }, []);
 
+  const handleDelete = (id) => {
+    axios
+      .delete("http://localhost:3001/deleteUser/" + id)
+      .then((res) => {
+        // Filter out the deleted user from the state
+        setUsers(users.filter((user) => user._id !== id));
+      })
+      .catch((err) => console.log(err));
+  };
+
   return (
     <div className="d-flex vh-100 bg-primary justify-content-center align-items-center">
       <div className="w-50 bg-white rounded p-3">
@@ -29,17 +39,23 @@ function Users() {
           <tbody>
             {users.map((user) => {
               return (
-                <tr key={user.id}>
+                <tr key={user._id}>
                   <td>{user.name}</td>
                   <td>{user.email}</td>
                   <td>{user.age}</td>
                   <td>
-                    <Link to="/update" className="btn btn-success">
+                    <Link
+                      to={`/update/${user._id}`}
+                      className="btn btn-success"
+                    >
                       Update User
                     </Link>
-                    <Link to="/update" className="btn btn-danger">
+                    <button
+                      onClick={(e) => handleDelete(user._id)}
+                      className="btn btn-danger"
+                    >
                       Delete User
-                    </Link>
+                    </button>
                   </td>
                 </tr>
               );
